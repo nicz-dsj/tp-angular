@@ -15,7 +15,7 @@ export class HttpService {
     return this.httpClient.get<User[]>(this.BASE_URL + '/users')
   }
 
-  public getAssignment(id: string): Observable<User[]> {
+  public getUser(id: string): Observable<User[]> {
     return this.httpClient.get<User[]>(`${this.BASE_URL}/${id}`);
   }
 }
