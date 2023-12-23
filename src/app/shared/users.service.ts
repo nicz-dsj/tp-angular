@@ -18,8 +18,4 @@ export class UsersService {
   getUsers() {
     this.httpService.getUsers().subscribe((data: User[]) => this.users.next(data))
   }
-
-  getUser(id: number) {
-    this.httpService.getUser(id).subscribe((data: User[]) => this.users.next(data))
-  }
 }

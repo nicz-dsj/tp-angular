@@ -14,8 +14,4 @@ export class HttpService {
   public getUsers(): Observable<User[]> {
     return this.httpClient.get<User[]>(this.BASE_URL + '/users')
   }
-
-  public getUser(id: number): Observable<User[]> {
-    return this.httpClient.get<User[]>(`${this.BASE_URL}/${id}`);
-  }
 }
