@@ -7,20 +7,17 @@
 # Stages run in sequential order, but jobs within stages run in parallel.
 #
 #
-#CI Configuration by Nicolas DE SAINT JEAN
-#Version: 0.1
-#Date: 20/12/23
-#Use Node.js LTS as the Docker image for building the app
+
 image: node:20.10.0
 
 #Install dependencies and Angular CLI before running the build script
 before_script:
 - npm install
-- npm install -g @angular/cli@16.2.10
+- npm install -g @angular/cli@17.0.8
 #Define the build script for the pages
 pages:
   script:
-    -ng build --aot --build-optimizer --common-chunk --vendor-chunk --optimization --progress --configuration=production --output-path=public
+    - ng build --aot --build-optimizer --common-chunk --vendor-chunk --optimization --progress --configuration=production --output-path=public
     - echo "/* /index.html 200" >> ./public/_redirects
 
 artifacts:
