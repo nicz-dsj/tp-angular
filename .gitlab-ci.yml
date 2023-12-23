@@ -18,7 +18,7 @@ before_script:
 # Define the build script for the pages
 pages:
   script:
-    - ng build --aot --progress --configuration=production --output-path=.
+    - ng build --aot --progress --configuration=production
     - echo "/* /index.html 200" >> ./public/_redirects
   artifacts:
     paths:
