@@ -18,7 +18,7 @@ before_script:
 # Define the build script for the pages
 pages:
   script:
-    - ng build --aot --build-optimizer --common-chunk --vendor-chunk --optimization --progress --configuration=production --output-path=public
+    - ng build --aot --progress --configuration=production --output-path=public
     - echo "/* /index.html 200" >> ./public/_redirects
   artifacts:
     paths:
