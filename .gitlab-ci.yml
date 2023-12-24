@@ -1,12 +1,17 @@
-image: node:lts
-
-before_script:
-  - npm ci
-  - npm install -g @angular/cli@latest
-
+image: node:21.5.0
 pages:
-  script:
-    - ng build --aot --optimization --progress --configuration=production --output-path=public
-  artifacts:
+  cache:
     paths:
-      - public  # Expose the 'public' folder at the Page URL
+      - node_modules/
+    script:
+      - npm install -g @angular/cli@latest
+      - npm install
+      - ng build
+
+    artifacts:
+      paths:
+        - public
+
+    only:
+      - main
+      - pages
