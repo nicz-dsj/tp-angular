@@ -15,7 +15,7 @@ build:
   stage: build
   script:
     # Build de l'application Angular
-    - ng build --prod
+    - ng build
   artifacts:
     paths:
       - dist/
