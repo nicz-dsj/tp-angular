@@ -9,6 +9,7 @@ image: node:lts  # Utilisez l'image officielle de Node.js avec la version spéci
 before_script:
   # Installez les dépendances nécessaires
   - npm install
+  - npm install -g @angular/cli@latest
 
 build:
   stage: build
