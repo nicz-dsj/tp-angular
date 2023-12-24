@@ -9,12 +9,12 @@
 #
 
 # Use Node.js LTS as the Docker image for building the app
-image: node:20.10.0
+image: node:lts
 
 # Install dependencies and Angular CLI before running the build script
 before_script:
   - npm install
-  - npm install -g @angular/cli@17.0.8
+  - npm install -g @angular/cli@latest
 # Define the build script for the pages
 pages:
   script:
