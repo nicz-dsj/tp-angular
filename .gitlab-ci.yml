@@ -1,12 +1,33 @@
-image: node:lts
+# .gitlab-ci.yml
+
+stages:
+  - build
+  - deploy
+
+image: node:lts  # Utilisez l'image officielle de Node.js avec la version spécifiée
 
 before_script:
-  - npm ci
-  - npm install -g @angular/cli@latest
+  # Installez les dépendances nécessaires
+  - npm install
 
-pages:
+build:
+  stage: build
   script:
-    - ng build --aot --build-optimizer --common-chunk --vendor-chunk --optimization --progress --configuration=production --output-path=public
+    # Build de l'application Angular
+    - ng build --prod
   artifacts:
     paths:
-      - public  # Expose the 'public' folder at the Page URL
+      - dist/
+
+pages:
+  stage: deploy
+  script:
+    # Déplacez les fichiers de build dans le dossier public
+    - mv dist/* public/
+
+  artifacts:
+    paths:
+      - public
+
+  only:
+    - main  # Déployez uniquement à partir de la branche master (ajustez selon vos besoins)
