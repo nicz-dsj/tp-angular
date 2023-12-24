@@ -4,10 +4,10 @@ pages:
     paths:
       - node_modules/
     
-    script:
-      - npm install -g @angular/cli@latest
-      - npm install
-      - ng build
+  script:
+    - npm install -g @angular/cli@latest
+    - npm install
+    - ng build
 
   artifacts:
     paths:
