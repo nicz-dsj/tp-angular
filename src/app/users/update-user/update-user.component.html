@@ -1,1 +1,31 @@
-<p>update-user works!</p>
+<div class="container" *ngIf="selectedUser">
+  <mat-card class="card">
+    <h1>Ajouter un utilisateur</h1>
+    <mat-divider></mat-divider>
+    <form (ngSubmit)="onSubmit()" class="update-user-form">
+      <mat-form-field>
+        <mat-label>Nom</mat-label>
+        <input matInput type="text" [(ngModel)]="selectedUser.name" [ngModelOptions]="{standalone: true}">
+      </mat-form-field>
+      <mat-form-field>
+        <mat-label>Occupation</mat-label>
+        <input matInput [(ngModel)]="selectedUser.occupation" [ngModelOptions]="{standalone: true}">
+      </mat-form-field>
+      <mat-form-field>
+        <mat-label>Email</mat-label>
+        <input matInput [(ngModel)]="selectedUser.email" [ngModelOptions]="{standalone: true}">
+      </mat-form-field>
+      <mat-form-field>
+        <mat-label>Bio</mat-label>
+        <textarea matInput [(ngModel)]="selectedUser.bio" [ngModelOptions]="{standalone: true}"></textarea>
+      </mat-form-field>
+      <div class="buttons">
+        <button class="btn" type="submit" mat-flat-button color="primary">Mettre à jour</button>
+        <button class="btn" mat-flat-button routerLink="/">Retour à la liste</button>
+      </div>
+    </form>
+  </mat-card>
+</div>
+
+
+

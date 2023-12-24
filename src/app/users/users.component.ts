@@ -1,25 +1,27 @@
 import {ChangeDetectorRef, Component, OnInit, AfterContentChecked, ViewChild} from '@angular/core';
-import {User} from "./user.model";
+import {User} from "../shared/models/user.model";
 import {MatTableDataSource} from "@angular/material/table";
 import {MatPaginator} from "@angular/material/paginator";
-import {UsersService} from "../shared/users.service";
+import {UsersService} from "../shared/services/users.service";
 import {Subscription} from "rxjs";
-import {HttpClient} from "@angular/common/http";
 import {MatSort} from "@angular/material/sort";
+import {MatDialog} from "@angular/material/dialog";
+import {DeleteUserDialogComponent} from "./delete-user-dialog/delete-user-dialog.component";
 
 @Component({
   selector: 'app-users',
   templateUrl: './users.component.html',
   styleUrl: './users.component.scss'
 })
-export class UsersComponent implements OnInit, AfterContentChecked {
+export class UsersComponent implements OnInit {
   users: User[] = []
   subscriptions: Subscription[] = []
+  selectedUser: User | null = null;
 
   dataSource: MatTableDataSource<User>;
   displayedColumns = ['id', 'name', 'occupation', 'email', 'bio', 'actions']
 
-  constructor(private changeDetector: ChangeDetectorRef, private userService: UsersService, private httpClient: HttpClient) {}
+  constructor(private changeDetector: ChangeDetectorRef, private userService: UsersService, public dialog: MatDialog) {}
 
   @ViewChild('paginator') paginator: MatPaginator;
   @ViewChild(MatSort) sort!: MatSort;
@@ -27,22 +29,25 @@ export class UsersComponent implements OnInit, AfterContentChecked {
   pageSizes = [5, 10, 25, 50, 100]
 
   ngOnInit(): void {
+
+  }
+
+  ngOnDestroy(){
+    for (const subscription of this.subscriptions) {
+      subscription.unsubscribe();
+    }
+  }
+
+  ngAfterViewInit(){
     this.userService.getUsers();
     let subscription = this.userService.users.subscribe(users => {
       this.users = users;
+      this.dataSource = new MatTableDataSource(this.users)
+      this.dataSource.paginator = this.paginator
+      this.dataSource.sort = this.sort
     });
+
     this.subscriptions.push(subscription)
-  }
-
-  ngOnDestroy(){}
-
-  ngAfterViewInit(){
-    this.dataSource = new MatTableDataSource(this.users)
-    this.dataSource.paginator = this.paginator
-    this.dataSource.sort = this.sort
-  }
-
-  ngAfterContentChecked(){
     this.changeDetector.detectChanges()
   }
 
@@ -53,5 +58,12 @@ export class UsersComponent implements OnInit, AfterContentChecked {
     if (this.dataSource.paginator) {
       this.dataSource.paginator.firstPage();
     }
+  }
+
+  openDialog(element: User){
+    this.dialog.open(DeleteUserDialogComponent, {
+      width: '500px',
+      data: element
+    })
   }
 }

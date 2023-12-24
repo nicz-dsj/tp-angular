@@ -15,8 +15,12 @@ import {MatCardModule} from "@angular/material/card";
 import {MatButtonModule} from "@angular/material/button";
 import {MatInputModule} from "@angular/material/input";
 import {MatPaginatorModule} from "@angular/material/paginator";
-import {UsersService} from "./shared/users.service";
+import {UsersService} from "./shared/services/users.service";
 import {MatSortModule} from "@angular/material/sort";
+import {MatDividerModule} from "@angular/material/divider";
+import {FormsModule, ReactiveFormsModule} from "@angular/forms";
+import { DeleteUserDialogComponent } from './users/delete-user-dialog/delete-user-dialog.component';
+import {MatDialogModule} from "@angular/material/dialog";
 
 @NgModule({
   declarations: [
@@ -25,6 +29,7 @@ import {MatSortModule} from "@angular/material/sort";
     UpdateUserComponent,
     AddUserComponent,
     UserDetailComponent,
+    DeleteUserDialogComponent,
   ],
   imports: [
     BrowserAnimationsModule,
@@ -37,7 +42,11 @@ import {MatSortModule} from "@angular/material/sort";
     MatButtonModule,
     MatInputModule,
     MatPaginatorModule,
-    MatSortModule
+    MatSortModule,
+    MatDividerModule,
+    MatDialogModule,
+    FormsModule,
+    ReactiveFormsModule
   ],
   providers: [
     provideClientHydration(), provideHttpClient(withFetch()), UsersService

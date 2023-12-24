@@ -1,0 +1,23 @@
+.container {
+  padding: 50px 50px;
+}
+
+.card {
+  padding: 30px;
+}
+
+.update-user-form {
+  margin-top: 15px;
+  display: flex;
+  flex-direction: column;
+}
+
+.buttons{
+  display: flex;
+  flex-direction: row;
+}
+
+.btn {
+  min-width: 8em;
+  margin-right: 20px;
+}

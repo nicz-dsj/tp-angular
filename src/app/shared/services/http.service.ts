@@ -1,8 +1,8 @@
 import { Injectable } from '@angular/core';
 import {HttpClient} from "@angular/common/http";
 import {Observable} from "rxjs";
-import {User} from "../users/user.model";
-import {Post} from "../users/add-user/post.model";
+import {User} from "../models/user.model";
+import {Post} from "../models/post.model";
 
 @Injectable({
   providedIn: 'root'
@@ -22,5 +22,15 @@ export class HttpService {
 
   public addUser(user: Post): Observable<User> {
     return this.httpClient.post<User>(`${this.BASE_URL}/users/`, user);
+  }
+
+  public updateUser(id: number, user: User): Observable<any> {
+    return this.httpClient.put(`${this.BASE_URL}/users/${id}`, user);
+  }
+
+  public deleteUser(id: number): Observable<any> {
+    return this.httpClient.delete(`${this.BASE_URL}/users/${id}`, {
+      responseType: 'text',
+    });
   }
 }

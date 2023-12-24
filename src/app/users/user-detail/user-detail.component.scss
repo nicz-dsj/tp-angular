@@ -1,0 +1,21 @@
+.container {
+  padding: 50px 50px;
+}
+
+.card {
+  padding: 30px;
+}
+
+.details {
+  margin-top: 15px;
+}
+
+.buttons{
+  display: flex;
+  flex-direction: row;
+}
+
+.btn {
+  min-width: 8em;
+  margin-right: 20px;
+}

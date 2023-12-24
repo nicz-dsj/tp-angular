@@ -1,10 +1,9 @@
 import { Injectable } from '@angular/core';
-import {BehaviorSubject, catchError, map, Observable} from "rxjs";
+import {BehaviorSubject, catchError, map, Observable, throwError} from "rxjs";
 import {Router} from "@angular/router";
-import {User} from "../users/user.model";
-import {HttpClient} from "@angular/common/http";
+import {User} from "../models/user.model";
 import {HttpService} from "./http.service";
-import {Post} from "../users/add-user/post.model";
+import {Post} from "../models/post.model";
 
 @Injectable({
   providedIn: 'root'
@@ -25,9 +24,6 @@ export class UsersService {
           return element
         })
       }),
-      catchError((error) => {
-        throw new Error(error)
-      })
     )
       .subscribe((data: User[]) => {
         console.log(data)
@@ -35,21 +31,65 @@ export class UsersService {
       })
   }
 
-  getUser(id: number){
-    const sub = this.httpService
+  getUser(id: number) {
+    this.httpService
       .getUser(id)
+      .pipe(
+        catchError((error) => {
+          this.selectedUser.next(null);
+          return throwError(error);
+        })
+      )
       .subscribe((data) => {
         this.selectedUser.next(data);
-        sub.unsubscribe();
       });
   }
 
   addUser(user: Post): void {
     const sub = this.httpService.addUser(user).subscribe((data) => {
       console.log(data);
-      console.log('add user');
-      this.router.navigate(['home']);
+      console.log('Utilisateur crée.');
+
+      this.httpService.getUsers().subscribe((users) => {
+        this.users.next(users);
+      });
+
+      this.router.navigate(['']);
       sub.unsubscribe;
     });
+  }
+
+  updateUser() {
+    const selectedUser = this.selectedUser.getValue();
+    if (selectedUser) {
+      const sub = this.httpService
+        .updateUser(selectedUser.id, selectedUser)
+        .subscribe(() => {
+          console.log('Utilisateur mis à jour.');
+
+          this.httpService.getUsers().subscribe((users) => {
+            this.users.next(users);
+          });
+
+          this.router.navigate(['']);
+          this.selectedUser.next(null);
+          sub.unsubscribe();
+        });
+    }
+  }
+
+  deleteUser(id: number){
+    const sub = this.httpService
+      .deleteUser(id)
+      .subscribe(() => {
+        console.log('Utilisateur supprimé');
+
+        this.httpService.getUsers().subscribe((users) => {
+          this.users.next(users);
+        });
+
+        this.router.navigate(['']);
+        sub.unsubscribe();
+      });
   }
 }

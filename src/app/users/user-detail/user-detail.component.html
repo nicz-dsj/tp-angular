@@ -1,1 +1,19 @@
-<p>user-detail works!</p>
+<div class="container" *ngIf="selectedUser">
+  <mat-card class="card">
+    <h1>Détails de l'utilisateur</h1>
+    <mat-divider></mat-divider>
+    <div class="details">
+      <p><strong>Id :</strong> {{ selectedUser.id }}</p>
+      <p><strong>Nom :</strong> {{ selectedUser.name }}</p>
+      <p><strong>Occupation :</strong> {{ selectedUser.occupation }}</p>
+      <p><strong>Email :</strong> {{ selectedUser.email }}</p>
+      <p><strong>Bio :</strong> {{ selectedUser.bio }}</p>
+    </div>
+    <div class="buttons">
+      <button class="btn" mat-flat-button routerLink="/">Retour à la liste</button>
+      <button class="btn" mat-flat-button color="primary" routerLink="/update/{{ selectedUser.id }}">Éditer</button>
+      <button class="btn" mat-flat-button color="warn" (click)="openDialog()">Supprimer</button>
+    </div>
+  </mat-card>
+</div>
+
